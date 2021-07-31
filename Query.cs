@@ -15,30 +15,30 @@ namespace apiProject
             requestType = RequestType;
             rawData = RequestData;
             sqlQuery = "";
+
+            string[] splitString = rawData.Split(',');
+
             if(requestType == "GET")
             {
-                sqlQuery += "SELECT ";
-                string[] splitString = rawData.Split(',');
-                sqlQuery += "\"";
+                sqlQuery += "SELECT * FROM patientData WHERE(";
                 sqlQuery += splitString[0];
                 for(int i = 1; i < splitString.Length; i++)
                 {
-                    sqlQuery += "\", \"";
+                    sqlQuery += ", ";
                     sqlQuery += splitString[i];
                 }
-                sqlQuery += "\" FROM patientData;";
+                sqlQuery += ");";
             }
             if(requestType == "POST")
-            {
-                sqlQuery = "INSERT INTO patientData VALUES(\"";
-                string[] splitString = rawData.Split(',');
+            {           
+                sqlQuery = "INSERT INTO patientData VALUES(\'";
                 sqlQuery += splitString[0];
                 for(int i = 1; i < splitString.Length; i++)
                 {
-                    sqlQuery += "\", \"";
+                    sqlQuery += "\', \'";
                     sqlQuery += splitString[i];
                 }
-                sqlQuery += "\");";
+                sqlQuery += "\');";
             }
         }
     }
